@@ -35,8 +35,12 @@ public class ShoppingListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shopping_list);
 
         items = new ArrayList<>();
-        items.add(new ShoppingItem("Potatoes"));
-        items.add(new ShoppingItem("Toilet Paper"));
+        items.add(new ShoppingItem("Potatoes", false));
+        items.add(new ShoppingItem("Toilet Paper", false));
+        items.add(new ShoppingItem("Soap", true));
+
+        // Després de canviar el model, hem de cridar a adapter.notify
+        //adapter.notifyItemRemoved(0); // Fa una animació quan s'esborra un element de la llista
 
         items_view = findViewById(R.id.items_view);
         btn_add = findViewById(R.id.btn_add);
@@ -53,7 +57,13 @@ public class ShoppingListActivity extends AppCompatActivity {
         adapter.setOnClickListener(new ShoppingListAdapter.OnClickListener() {
             @Override
             public void onClick(int position) {
-                String msg = "Has clicat: " + items.get(position).getName();
+
+                ShoppingItem item = items.get(position);
+
+                item.toggleChecked();
+                adapter.notifyItemChanged(position);
+
+                String msg = "You've clicked: " + item.getName();
                 Toast.makeText(ShoppingListActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         });

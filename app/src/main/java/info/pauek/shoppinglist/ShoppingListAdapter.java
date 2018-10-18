@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class ShoppingListAdapter extends RecyclerView.Adapter<ItemHolder> {
+
     Context context;
     List<ShoppingItem> items;
     private OnClickListener onClickListener;
