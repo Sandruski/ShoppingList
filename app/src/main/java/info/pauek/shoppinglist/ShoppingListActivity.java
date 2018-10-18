@@ -1,10 +1,12 @@
 package info.pauek.shoppinglist;
 
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -45,6 +47,7 @@ public class ShoppingListActivity extends AppCompatActivity {
         items_view = findViewById(R.id.items_view);
         btn_add = findViewById(R.id.btn_add);
         edit_box = findViewById(R.id.edit_box);
+        edit_box.setText("");
 
         adapter = new ShoppingListAdapter(this, items);
 
@@ -67,5 +70,18 @@ public class ShoppingListActivity extends AppCompatActivity {
                 Toast.makeText(ShoppingListActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void onClickAdd(View view) {
+
+        String name = edit_box.getText().toString();
+
+        if (!name.isEmpty()) {
+
+            items.add(new ShoppingItem(name, false));
+            adapter.notifyItemInserted(items.size() - 1);
+
+            edit_box.setText("");
+        }
     }
 }
