@@ -122,14 +122,16 @@ public class ShoppingListActivity extends AppCompatActivity {
         switch(item.getItemId()) {
             case R.id.btn_remove: {
 
-                for (int i = 0; i < items.size(); ++i) {
+                int i = 0;
+                while (i < items.size()) {
 
                     if (items.get(i).isCheck())
                     {
                         items.remove(i);
                         adapter.notifyItemRemoved(i);
-                        --i;
                     }
+                    else
+                        ++i;
                 }
                 break;
             }
