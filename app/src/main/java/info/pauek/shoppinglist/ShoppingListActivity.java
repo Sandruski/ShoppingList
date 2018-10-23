@@ -37,9 +37,6 @@ public class ShoppingListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_shopping_list);
 
         items = new ArrayList<>();
-        items.add(new ShoppingItem("Potatoes", false));
-        items.add(new ShoppingItem("Toilet Paper", false));
-        items.add(new ShoppingItem("Soap", true));
 
         // Després de canviar el model, hem de cridar a adapter.notify
         //adapter.notifyItemRemoved(0); // Fa una animació quan s'esborra un element de la llista
