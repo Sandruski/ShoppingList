@@ -1,6 +1,8 @@
 package info.pauek.shoppinglist;
 
+import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -41,9 +43,6 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         items = new ArrayList<>();
 
-        // Després de canviar el model, hem de cridar a adapter.notify
-        //adapter.notifyItemRemoved(0); // Fa una animació quan s'esborra un element de la llista
-
         items_view = findViewById(R.id.items_view);
         btn_add = findViewById(R.id.btn_add);
         edit_box = findViewById(R.id.edit_box);
@@ -68,6 +67,31 @@ public class ShoppingListActivity extends AppCompatActivity {
 
                 String msg = "You've clicked: " + item.getName();
                 Toast.makeText(ShoppingListActivity.this, msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+        adapter.setOnLongClickListener(new ShoppingListAdapter.OnLongClickListener() {
+            @Override
+            public void onLongClick(final int position) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingListActivity.this);
+
+                builder.setTitle(R.string.confirmation)
+                        .setMessage(R.string.remove_confirmation)
+                        .setPositiveButton(R.string.remove, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                items.remove(position);
+                                adapter.notifyItemRemoved(position);
+
+                                Toast.makeText(ShoppingListActivity.this, "Selected item has been removed", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, null);
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
