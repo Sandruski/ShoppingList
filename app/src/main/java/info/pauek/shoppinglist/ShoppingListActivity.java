@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ShoppingListActivity extends AppCompatActivity {
 
@@ -80,5 +83,33 @@ public class ShoppingListActivity extends AppCompatActivity {
 
             edit_box.setText("");
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch(item.getItemId()) {
+            case R.id.btn_remove: {
+
+                for (int i = 0; i < items.size(); ++i) {
+
+                    if (items.get(i).isCheck())
+                    {
+                        items.remove(i);
+                        adapter.notifyItemRemoved(i);
+                        --i;
+                    }
+                }
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
